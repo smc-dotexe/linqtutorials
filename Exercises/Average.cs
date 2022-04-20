@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Exercises
 {
@@ -23,7 +24,12 @@ namespace Exercises
         public static float? AverageSnowFall(SnowFallData snowFallData)
         {
             //TODO your code goes here
-            throw new NotImplementedException();
+            if (snowFallData == null || 
+                snowFallData.MonthlySnowFallDataItems == null || 
+                snowFallData.MonthlySnowFallDataItems.Count != 12)
+                return null;
+
+            return snowFallData.MonthlySnowFallDataItems.Average(x => x.SnowfallInCentimeters);
         }
 
         //Coding Exercise 2
@@ -48,7 +54,10 @@ namespace Exercises
         public static double MaxAverageOfMarks(IEnumerable<Student> students)
         {
             //TODO your code goes here
-            throw new NotImplementedException();
+            if (!students.Any())
+                return 0;
+
+            return students.Max(student => student.Marks.Any() ? student.Marks.Average() : 0);
         }
 
         //Refactoring challenge
@@ -57,7 +66,10 @@ namespace Exercises
             List<float?> heights, float defaultIfNull)
         {
             //TODO your code goes here
-            throw new NotImplementedException();
+            if (heights != null && heights.Any())
+                return heights.Average(x => x ?? defaultIfNull);
+
+            return 0;
         }
 
         //do not modify this method
