@@ -57,16 +57,20 @@ namespace Exercises
         public static IEnumerable<string> GetWordsBetweenStartAndEnd(List<string> words)
         {
             //TODO your code goes here
-            var start = words.IndexOf("START");
-            var end = words.IndexOf("END");
+            const string Start = "START";
+            const string End = "END";
+            
+            var isValidCollection = 
+                words.Count(word => word == Start) == 1 &&
+                words.Count(word => word == End) == 1 &&
+                words.IndexOf(Start) < words.IndexOf(End);
 
-            if (start == -1 || end == -1)
-                return null;
-
-            if (words.Count(x => x == "START") > 1 || words.Count(x => x == "END") > 1)
-                return null;
-
-            return words.Skip(start).SkipLast(end);
+            return isValidCollection ?
+                words
+                .SkipWhile(word => word == Start)
+                .Skip(words.IndexOf(Start)+1)
+                .TakeWhile(word => word != End) :
+                Enumerable.Empty<string>();
         }
 
         //Refactoring challenge
@@ -75,7 +79,7 @@ namespace Exercises
             IEnumerable<int> numbers)
         {
             //TODO your code goes here
-            throw new NotImplementedException();
+            return numbers.SkipWhile(x => x % 100 != 0).ToList();
         }
 
         //do not modify this method
